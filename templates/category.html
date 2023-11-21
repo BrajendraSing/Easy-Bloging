@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div id="main-content">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-md-8">
+                  <!-- post-container -->
+                    <div class="post-container">
+                        {% if posts %}
+                        {% for post in posts %}
+                        <div class="post-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a class="post-img" href='{% url "single" post.id %}'><img src="{{ post.image.url }}" alt="post image"/></a>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="inner-content clearfix">
+                                        <h3><a href='{% url "single" post.id %}'>{{post.title}}</a></h3>
+                                        <div class="post-information">
+                                            <span>
+                                                <i class="fa fa-tags" aria-hidden="true"></i>
+                                                <a href='{% url "category" post.category.id %}'>{{post.category}}</a>
+                                            </span>
+                                            <span>
+                                                <i class="fa fa-user" aria-hidden="true"></i>
+                                                <a href='#'>{{post.author}}</a>
+                                            </span>
+                                            <span>
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                                {{post.date}}
+                                            </span>
+                                        </div>
+                                        <p class="description">
+                                            {{post.description|slice:"0:135"|safe}}
+                                            ....
+                                        </p>
+                                        <a class='read-more pull-right' href='{% url "single" post.id %}'>read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
+
+
+                        {% else %}
+                        <h1>
+                            No Post Available
+                        </h1>
+                        {% endif %}
+                        
+                    </div>
+                    <!-- /post-container -->
+                </div>
+            <!-- side bar -->
+            <div id="sidebar" class="col-md-4">
+                <!-- search box -->
+                {% include "search.html" %}
+                <!-- /search box -->
+                <!-- recent posts box -->
+                <div class="recent-post-container">
+                    <h4>Recent Posts</h4>
+                    {% include "sidebar.html" %}
+                </div>
+                <!-- /recent posts box -->
+            </div>
+            
+            <!-- side bar end -->
+            </div>
+        </div>
+    </div> 
+{% endblock content %}
+
